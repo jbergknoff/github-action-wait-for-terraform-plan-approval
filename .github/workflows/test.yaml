@@ -27,7 +27,7 @@ jobs:
       run: echo "Action should have reported timeout, but did not"; exit 1
     - name: Approve plan
       run: |-
-        curl -X PUT -d '{"status": "approved"}' "${{steps.submit_plan.outputs.approval_prompt_url}}"/status
+        curl -X PUT -d '{"status": "approved"}' -H 'content-type: application/json' "${{steps.submit_plan.outputs.approval_prompt_url}}"/status
     - name: Wait after plan is approved
       uses: ./
       id: second_wait
@@ -35,6 +35,3 @@ jobs:
         command: wait
         plan_id: ${{steps.submit_plan.outputs.plan_id}}
         timeout_seconds: 10
-    - name: Verify approved
-      if: steps.second_wait.outputs.plan_status != 'approved'
-      run: echo "Action should have reported approval, but did not"; exit 1
