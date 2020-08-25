@@ -26,7 +26,7 @@ jobs:
       if: steps.first_wait.outputs.plan_status != 'timed out'
       run: echo "Action should have reported timeout, but did not"; exit 1
     - name: Approve plan
-      run: 'curl -X PUT -d \'{"status": "approved"}\' "${{steps.submit_plan.outputs.approval_prompt_url}}"/status'
+      run: curl -X PUT -d \'{"status": "approved"}\' "${{steps.submit_plan.outputs.approval_prompt_url}}"/status
     - name: Wait after plan is approved
       uses: ./
       id: second_wait
