@@ -1,0 +1,38 @@
+name: Test
+
+on: push
+
+jobs:
+  test_plan_approval:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Submit plan
+      uses: jbergknoff/github-action-wait-for-terraform-plan-approval@$GITHUB_SHA
+      id: submit_plan
+      with:
+        command: submit
+        plan_contents: Hello, world!
+    - name: Wait while plan is ignored
+      uses: jbergknoff/github-action-wait-for-terraform-plan-approval@$GITHUB_SHA
+      id: first_wait
+      continue-on-error: true
+      with:
+        command: wait
+        plan_id: ${{steps.submit_plan.outputs.plan_id}}
+        timeout_seconds: 10
+    - name: Verify wait timed out
+      if: steps.first_wait.outputs.plan_status != 'timed out'
+      run: echo "Action should have reported timeout, but did not"; exit 1
+    - name: Approve plan
+      run: curl -X PUT -d '{"status": "approved"}' "${{steps.submit_plan.outputs.approval_prompt_url}}"/status
+    - name: Wait after plan is approved
+      uses: jbergknoff/github-action-wait-for-terraform-plan-approval@$GITHUB_SHA
+      id: second_wait
+      with:
+        command: wait
+        plan_id: ${{steps.submit_plan.outputs.plan_id}}
+        timeout_seconds: 10
+    - name: Verify approved
+      if: steps.second_wait.outputs.plan_status != 'approved'
+      run: echo "Action should have reported approval, but did not"; exit 1
