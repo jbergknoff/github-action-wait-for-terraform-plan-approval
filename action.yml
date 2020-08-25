@@ -32,7 +32,7 @@ outputs:
   approval_prompt_url:
     description: When `command == submit`, returns the URL that a human should visit to review and approve/reject the plan.
   plan_status:
-    description: 'When `command == wait`, returns the final status of the plan: either 'approved', 'rejected', or 'timed out'.'
+    description: 'When `command == wait`, returns the final status of the plan: either "approved", "rejected", or "timed out".'
 
 runs:
   using: 'docker'
