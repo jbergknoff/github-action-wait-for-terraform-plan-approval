@@ -77,7 +77,7 @@ jobs:
       id: submit_plan
       with:
         command: submit
-        plan_contents: steps.plan.outputs.stdout
+        plan_contents: ${{steps.plan.outputs.stdout}}
 
     # Snip: send a Slack DM asking somebody to visit `steps.submit_plan.outputs.approval_prompt_url` to approve
 
@@ -85,7 +85,7 @@ jobs:
       uses: jbergknoff/github-action-wait-for-terraform-plan-approval@v1
       with:
         command: wait
-        plan_id: steps.submit_plan.outputs.plan_id
+        plan_id: ${{steps.submit_plan.outputs.plan_id}}
         timeout_seconds: 600
 
     - name: Terraform Apply
