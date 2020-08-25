@@ -2,7 +2,7 @@ name: Wait for Terraform Plan Approval
 description: Uses an external service to display a plan and wait for approval/rejection. Polls in the meantime
 inputs:
   command:
-    description: What to do: either `submit` or `wait`.
+    description: 'What to do: either `submit` or `wait`.'
     required: true
     default: submit
   plan_contents:
