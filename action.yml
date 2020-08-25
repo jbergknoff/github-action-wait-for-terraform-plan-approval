@@ -7,23 +7,16 @@ inputs:
     default: submit
   plan_contents:
     description: The contents of the plan. ANSI color codes are fine. This should be plaintext, not base64-encoded. Required when `command == submit`.
-    #required: false
-    #default: ''
   plan_id:
     description: The plan id to wait for. Required when `command == wait`.
-    #required: false
-    #default: ''
   external_service_url:
     description: Base URL for the external service that will display plans for approval
-    #required: false
     default: https://terraform-plan-approval.herokuapp.com
   timeout_seconds:
     description: Give up waiting for approval/rejection after this many seconds
-    #required: false
     default: 300
   polling_period_seconds:
     description: The interval (in seconds) at which we'll check the plan status
-    #required: false
     default: 5
 
 outputs:
