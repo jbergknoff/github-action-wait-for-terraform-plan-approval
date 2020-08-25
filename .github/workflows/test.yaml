@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Submit plan
-      uses: jbergknoff/github-action-wait-for-terraform-plan-approval@$GITHUB_SHA
+      uses: jbergknoff/github-action-wait-for-terraform-plan-approval@${{github.sha}}
       id: submit_plan
       with:
         command: submit
