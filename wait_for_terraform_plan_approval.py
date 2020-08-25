@@ -36,7 +36,6 @@ def submit(plan_contents: str):
 
 def wait(plan_id: str, timeout_seconds: int, polling_period_seconds: int):
 	print(f'Waiting up to {timeout_seconds} seconds for {external_service_url}/plan/{plan_id} to be approved or rejected')
-	print('::warning file=app.js,line=1,col=5::What does this look like?')
 	waited = 0
 	while waited <= timeout_seconds:
 		response = requests.get(f'{external_service_url}/plan/{plan_id}/status')

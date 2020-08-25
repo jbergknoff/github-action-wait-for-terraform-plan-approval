@@ -44,7 +44,50 @@ When running with `command == wait`, returns the final status of the plan: eithe
 
 ## Example usage
 
-### TODO write a workflow/test using this and then fill this out
-uses: jbergknoff/github-action-wait-for-terraform-plan-approval@v1
-with:
-  who-to-greet: 'Mona the Octocat'
+The [tests for this repository](/.github/workflows/test.yaml) show off how to use this Action, but with two caveats:
+
+* Those tests refer to the action with `uses: ./` which should normally be `uses: jbergknoff/github-action-wait-for-terraform-plan-approval@v1`
+* The tests approve/reject the plan using `curl`. The approval/rejection would normally happen when a human visits the plan page and clicks a button.
+
+Here's a more conventional example:
+
+```
+name: Terraform Apply
+
+on: push
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -out saved_plan
+
+    - name: Submit plan for approval
+      uses: jbergknoff/github-action-wait-for-terraform-plan-approval@v1
+      id: submit_plan
+      with:
+        command: submit
+        plan_contents: steps.plan.outputs.stdout
+
+    # Snip: send a Slack DM asking somebody to visit `steps.submit_plan.outputs.approval_prompt_url` to approve
+
+    - name: Wait for approval
+      uses: jbergknoff/github-action-wait-for-terraform-plan-approval@v1
+      with:
+        command: wait
+        plan_id: steps.submit_plan.outputs.plan_id
+        timeout_seconds: 600
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve saved_plan
+```
