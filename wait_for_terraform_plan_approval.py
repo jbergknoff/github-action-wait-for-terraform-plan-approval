@@ -8,7 +8,7 @@ import requests
 
 external_service_url = os.getenv('INPUT_EXTERNAL_SERVICE_URL')
 if not external_service_url:
-	print('`plan_id` is required.')
+	print('`external_service_url` is required.')
 
 
 def submit(plan_contents: str):
