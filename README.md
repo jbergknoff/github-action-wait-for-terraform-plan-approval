@@ -123,3 +123,11 @@ jobs:
     - name: Terraform Apply
       run: terraform apply -auto-approve saved_plan
 ```
+
+![Submitting to the service](/image/submit.png)
+
+![Reviewing the plan](/image/approval.png)
+
+![Approved the plan](/image/approved.png)
+
+![Move on to apply](/image/apply.png)
