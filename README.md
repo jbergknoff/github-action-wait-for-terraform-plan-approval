@@ -124,10 +124,18 @@ jobs:
       run: terraform apply -auto-approve saved_plan
 ```
 
+#### Submitting the plan to the service
+
 ![Submitting to the service](/image/submit.png)
+
+#### Reviewing the plan
 
 ![Reviewing the plan](/image/approval.png)
 
+#### After approving the plan
+
 ![Approved the plan](/image/approved.png)
+
+#### Job continues after approval
 
 ![Move on to apply](/image/apply.png)
