@@ -40,7 +40,7 @@ This step will produce these outputs:
 
 #### Wait for a plan to be approved/rejected (`command == wait`)
 
-After generating a plan (here, assumed to happen as part of a step with id `plan`), we can submit it to the external service.
+Now we have our workflow wait for somebody to approve or reject that plan.
 
 ```yaml
 - name: Wait for approval
