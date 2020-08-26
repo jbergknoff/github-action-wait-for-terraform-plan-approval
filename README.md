@@ -2,7 +2,9 @@
 
 **This Action helps you send your Terraform plan to an external service where it can be displayed and approved/rejected by anyone who has the (randomly generated) link. If you use the default, publicly available service, you risk exposing any sensitive data in your plans. Alternately, you can point this Action at a service that you run, where you are responsible for keeping data secure. If neither option is acceptable to you, please do not use this Action.**
 
-This action uses an external service (https://terraform-plan-approval.herokuapp.com/, [GitHub](https://github.com/jbergknoff/terraform-plan-approval)) to allow a GitHub Action workflow to prompt a user to approve or reject a Terraform plan before proceeding. **This is just for demonstration purposes, and should not be used for any sensitive data because the service has no authentication/authorization and is fully public.** If you need this functionality for real workloads, considering running an instance of https://github.com/jbergknoff/terraform-plan-approval on a private network.
+**The author is not responsible for any loss of data or exfiltration of data caused by use of this Action.**
+
+This action uses an external service (https://terraform-plan-approval.herokuapp.com/, [GitHub](https://github.com/jbergknoff/terraform-plan-approval)) to allow a GitHub Action workflow to prompt a user to approve or reject a Terraform plan before proceeding. **This is just for demonstration purposes, and should not be used for any sensitive data because the service has no authentication/authorization and is fully public.** If you need this functionality for real workloads, considering running an instance of https://github.com/jbergknoff/terraform-plan-approval on a private network and/or behind an authorization gate (e.g. [Cloudflare Access](https://www.cloudflare.com/teams-access/)).
 
 # Usage
 
