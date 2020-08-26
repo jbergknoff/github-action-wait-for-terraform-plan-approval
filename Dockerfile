@@ -3,4 +3,5 @@ WORKDIR /opt
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 COPY wait_for_terraform_plan_approval.py .
+ENV PYTHONPATH=/opt
 ENTRYPOINT ["python", "-m", "wait_for_terraform_plan_approval"]
