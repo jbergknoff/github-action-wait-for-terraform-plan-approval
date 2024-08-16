@@ -7,13 +7,20 @@ import requests
 
 
 external_service_url = os.getenv('INPUT_EXTERNAL_SERVICE_URL')
+external_service_url_auth_token = os.getenv('INPUT_EXTERNAL_SERVICE_URL_AUTH_TOKEN')
+
 if not external_service_url:
 	print('`external_service_url` is required.')
 
 
 def submit(plan_contents: str):
+	headers = {}
+	if external_service_url_auth_token:
+		headers["Authorization"] = external_service_url_auth_token
+
 	response = requests.post(
 		f'{external_service_url}/plan',
+		headers=headers,
 		json={
 			'plan_base64': base64.b64encode(plan_contents.encode('utf8')).decode('utf8'),
 		},
@@ -37,8 +44,13 @@ def submit(plan_contents: str):
 def wait(plan_id: str, timeout_seconds: int, polling_period_seconds: int):
 	print(f'Waiting up to {timeout_seconds} seconds for {external_service_url}/plan/{plan_id} to be approved or rejected')
 	waited = 0
+
+	headers = {}
+	if external_service_url_auth_token:
+		headers["Authorization"] = external_service_url_auth_token
+
 	while waited <= timeout_seconds:
-		response = requests.get(f'{external_service_url}/plan/{plan_id}/status')
+		response = requests.get(f'{external_service_url}/plan/{plan_id}/status', headers=headers)
 		if response.status_code != 200:
 			print(f'Failed polling plan status. External service sent response code {response.status_code}.')
 			sys.exit(1)
